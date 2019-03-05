@@ -6,3 +6,5 @@ router.get('/', getHomePage);
 function getHomePage(req, res, next) {
   res.render('index');
 }
+
+module.exports = router;
