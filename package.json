@@ -1,11 +1,11 @@
 {
   "name": "quiz",
   "version": "1.0.0",
-  "description": "",
+  "description": "quiz",
   "main": "app.js",
   "scripts": {
     "start": "node ./bin/www",
-    "test": "test"
+    "test": "mocha --recursive"
   },
   "repository": {
     "type": "git",
@@ -16,11 +16,13 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "chai": "^4.2.0",
     "connect-mongo": "^2.0.3",
     "ejs": "^2.6.1",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "http-errors": "^1.7.2",
+    "mocha": "^6.0.2",
     "mongoose": "^5.4.17"
   }
 }
