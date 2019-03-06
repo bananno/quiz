@@ -1,7 +1,10 @@
 const expect = require('chai').expect;
+const sinon = require('sinon');
+const supertest = require('supertest');
+const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
-describe('User', function() {
+describe('User model validation', () => {
   it('validation returns no error for valid object', done => {
     const user = new User({
       username: 'samplename',
@@ -38,6 +41,31 @@ describe('User', function() {
     user.validate(err => {
       expect(err.errors.password).to.exist;
       done();
+    });
+  });
+});
+
+describe('User model authentication', () => {
+  beforeEach(() => {
+    sinon.stub(User, 'findOne');
+  });
+
+  afterEach(() => {
+    User.findOne.restore();
+  });
+
+  it('is valid when user exists and password is correct', done => {
+    const mockUser = new User({
+      username: 'samplename',
+      password: 'password123'
+    });
+
+    User.findOne.yields(null, mockUser);
+
+    User.hashPassword(mockUser, () => {
+      User.authenticate('samplename', 'password123', (user) => {
+        done();
+      });
     });
   });
 });

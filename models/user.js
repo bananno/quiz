@@ -14,16 +14,20 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.pre('save', next => {
+UserSchema.pre('save', function(next) {
   const user = this;
+  UserSchema.hashPassword(user, next);
+});
+
+UserSchema.statics.hashPassword = (user, next) => {
   bcrypt.hash(user.password, 10, (err, hash) => {
     if (err) {
       return next(err);
     }
     user.password = hash;
     next();
-  })
-});
+  });
+};
 
 UserSchema.statics.authenticate = (username, password, next) => {
   User.findOne({ username: username }, (error, user) => {
