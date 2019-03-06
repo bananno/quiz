@@ -15,6 +15,17 @@ function loginUser(req, res, next) {
 }
 
 function signupUser(req, res, next) {
+  const userData = {
+    username: req.body.username,
+    password: req.body.password,
+  };
+
+  if (!userData.username || !userData.password) {
+    const error = new Error('All fields are required.');
+    error.status = 412;
+    return next(error);
+  }
+
   res.redirect('/');
 }
 
