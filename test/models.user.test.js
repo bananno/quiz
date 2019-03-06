@@ -54,7 +54,7 @@ describe('User model authentication', () => {
     User.findOne.restore();
   });
 
-  it('is valid when user exists and password is correct', done => {
+  it('authenticates when user exists and password is correct', done => {
     const mockUser = new User({
       username: 'samplename',
       password: 'password123'
@@ -66,6 +66,27 @@ describe('User model authentication', () => {
       User.authenticate('samplename', 'password123', (user) => {
         done();
       });
+    });
+  });
+
+  it('does not authenticate when user exists but password is incorrect', done => {
+    const mockUser = new User({
+      username: 'samplename',
+      password: 'password123'
+    });
+
+    User.findOne.yields(null, mockUser);
+
+    User.hashPassword(mockUser, () => {
+      User.authenticate('samplename', 'password12345', (user) => {
+        done();
+      });
+    });
+  });
+
+  it('does not authenticate when user does not exist', done => {
+    User.authenticate('samplename', 'password12345', (user) => {
+      done();
     });
   });
 });
