@@ -1,7 +1,5 @@
 const expect = require('chai').expect;
 const sinon = require('sinon');
-const supertest = require('supertest');
-const bcrypt = require('bcrypt');
 const User = require('../models/user');
 
 describe('User model validation', () => {
@@ -63,7 +61,9 @@ describe('User model authentication', () => {
     User.findOne.yields(null, mockUser);
 
     User.hashPassword(mockUser, () => {
-      User.authenticate('samplename', 'password123', (user) => {
+      User.authenticate('samplename', 'password123', (error, user) => {
+        expect(error).to.be.null;
+        expect(user).to.exist;
         done();
       });
     });
@@ -78,14 +78,20 @@ describe('User model authentication', () => {
     User.findOne.yields(null, mockUser);
 
     User.hashPassword(mockUser, () => {
-      User.authenticate('samplename', 'password12345', (user) => {
+      User.authenticate('samplename', 'password12345', (error, user) => {
+        expect(error.message).to.equal('Incorrect password.');
+        expect(user).to.be.null;
         done();
       });
     });
   });
 
   it('does not authenticate when user does not exist', done => {
-    User.authenticate('samplename', 'password12345', (user) => {
+    User.findOne.yields(null, null);
+
+    User.authenticate('samplename', 'password123', (error, user) => {
+      expect(error.message).to.equal('User not found.');
+      expect(user).to.be.null;
       done();
     });
   });

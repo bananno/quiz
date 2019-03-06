@@ -32,20 +32,22 @@ UserSchema.statics.hashPassword = (user, next) => {
 UserSchema.statics.authenticate = (username, password, next) => {
   User.findOne({ username: username }, (error, user) => {
     if (error) {
-      return next(error);
+      return next(error, null);
     }
 
     if (!user) {
       error = new Error('User not found.');
       error.status = 401;
-      return next(error);
+      return next(error, null);
     }
 
     bcrypt.compare(password, user.password, (error, result) => {
       if (result === true) {
-        return next(user);
+        return next(null, user);
       }
-      return next();
+      error = new Error('Incorrect password.');
+      error.status = 401;
+      return next(error, null);
     });
   });
 }
