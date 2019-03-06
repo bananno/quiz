@@ -15,25 +15,23 @@ const UserSchema = new Schema({
 });
 
 UserSchema.statics.authenticate = (username, password, callback) => {
-  User.findOne({ username: username }, findUser);
-};
-
-function findUser(error, user) {
-  if (error) {
-    return callback(error);
-  }
-
-  if (!user) {
-    error = new Error('User not found.');
-    error.status = 401;
-    return callback(error);
-  }
-
-  bcrypt.compare(password, user.password, (error, result) => {
-    if (result === true) {
-      return callback(null, user);
+  User.findOne({ username: username }, (error, user) => {
+    if (error) {
+      return callback(error);
     }
-    return callback();
+
+    if (!user) {
+      error = new Error('User not found.');
+      error.status = 401;
+      return callback(error);
+    }
+
+    bcrypt.compare(password, user.password, (error, result) => {
+      if (result === true) {
+        return callback(user);
+      }
+      return callback();
+    });
   });
 }
 
