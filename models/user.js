@@ -14,23 +14,34 @@ const UserSchema = new Schema({
   },
 });
 
-UserSchema.statics.authenticate = (username, password, callback) => {
+UserSchema.pre('save', next => {
+  const user = this;
+  bcrypt.hash(user.password, 10, (err, hash) => {
+    if (err) {
+      return next(err);
+    }
+    user.password = hash;
+    next();
+  })
+});
+
+UserSchema.statics.authenticate = (username, password, next) => {
   User.findOne({ username: username }, (error, user) => {
     if (error) {
-      return callback(error);
+      return next(error);
     }
 
     if (!user) {
       error = new Error('User not found.');
       error.status = 401;
-      return callback(error);
+      return next(error);
     }
 
     bcrypt.compare(password, user.password, (error, result) => {
       if (result === true) {
-        return callback(user);
+        return next(user);
       }
-      return callback();
+      return next();
     });
   });
 }
