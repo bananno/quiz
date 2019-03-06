@@ -26,7 +26,29 @@ function signupUser(req, res, next) {
     return next(error);
   }
 
-  res.redirect('/');
+  User.findOne({ username: userData.username }, (error, user) => {
+    if (error) {
+      return next(error);
+    }
+
+    if (user) {
+      error = new Error('Username is already taken.');
+      error.status = 412;
+      return next(error);
+    }
+
+    User.create(userData, (error, user) => {
+      if (error) {
+        return next(error);
+      }
+
+      if (req.session) {
+        req.session.userId = user._id;
+      }
+
+      return res.redirect('/');
+    });
+  });
 }
 
 module.exports = router;
