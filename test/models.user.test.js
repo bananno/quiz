@@ -3,7 +3,7 @@ const User = require('../models/user');
 
 describe('User', function() {
   it('validation returns no error for valid object', done => {
-    var user = new User({
+    const user = new User({
       username: 'samplename',
       password: 'password123'
     });
@@ -14,7 +14,7 @@ describe('User', function() {
   });
 
   it('should be invalid without any attributes', done => {
-    var user = new User();
+    const user = new User();
     user.validate(err => {
       expect(err.errors.username).to.exist;
       done();
@@ -22,7 +22,7 @@ describe('User', function() {
   });
 
   it('should be invalid without username', done => {
-    var user = new User({
+    const user = new User({
       password: 'password123'
     });
     user.validate(err => {
@@ -32,7 +32,7 @@ describe('User', function() {
   });
 
   it('should be invalid without password', done => {
-    var user = new User({
+    const user = new User({
       username: 'samplename'
     });
     user.validate(err => {
