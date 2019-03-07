@@ -16,6 +16,8 @@
   "dependencies": {
     "bcrypt": "^3.0.4",
     "body-parser": "^1.18.3",
+    "casper-chai": "^0.3.0",
+    "casperjs": "^1.1.4",
     "chai": "^4.2.0",
     "connect-mongo": "^2.0.3",
     "ejs": "^2.6.1",
@@ -23,7 +25,9 @@
     "express-session": "^1.15.6",
     "http-errors": "^1.7.2",
     "mocha": "^6.0.2",
+    "mocha-casperjs": "^0.6.0",
     "mongoose": "^5.4.17",
+    "phantomjs-prebuilt": "^2.1.16",
     "sinon": "^7.2.7",
     "supertest": "^3.4.2"
   }
