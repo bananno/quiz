@@ -3,11 +3,16 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/', getHomePage);
+router.get('/profile', getProfilePage);
 router.post('/login', loginUser);
 router.post('/signup', signupUser);
 
 function getHomePage(req, res, next) {
   res.render('index');
+}
+
+function getProfilePage(req, res, next) {
+  res.render('profile');
 }
 
 function loginUser(req, res, next) {

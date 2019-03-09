@@ -11,7 +11,7 @@ $(document).on('submit', '#signup-form form', (event) => {
       password: password,
     },
     success: (data) => {
-      window.location.href = '/';
+      window.location.href = '/profile';
     },
     error: (data) => {
       let message = data.responseText;
