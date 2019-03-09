@@ -20,7 +20,10 @@ function getLoginPage(req, res, next) {
 
 function getProfilePage(req, res, next) {
   authenticate(req, res, next, user => {
-    res.render('profile');
+    res.render('layout', {
+      view: 'profile',
+      title: 'Profile',
+    });
   });
 }
 

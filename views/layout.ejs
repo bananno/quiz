@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>
+        <%= locals.title ? locals.title + ' | ' : null %>
+        Quiz
+    </title>
+
+    <script src="/vendor/jquery-3.3.1.min.js"></script>
+</head>
+<body>
+    <%- include('./' + view) %>
+</body>
+</html>
