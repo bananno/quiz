@@ -3,16 +3,25 @@ const router = express.Router();
 const User = require('../models/user');
 
 router.get('/', getHomePage);
+router.get('/login', getLoginPage);
 router.get('/profile', getProfilePage);
 router.post('/login', loginUser);
 router.post('/signup', signupUser);
 
 function getHomePage(req, res, next) {
-  res.render('index');
+  authenticate(req, res, next, user => {
+    res.redirect('profile');
+  });
+}
+
+function getLoginPage(req, res, next) {
+  res.redirect('login');
 }
 
 function getProfilePage(req, res, next) {
-  res.render('profile');
+  authenticate(req, res, next, user => {
+    res.render('profile');
+  });
 }
 
 function loginUser(req, res, next) {
@@ -53,6 +62,18 @@ function signupUser(req, res, next) {
 
       return res.redirect('/');
     });
+  });
+}
+
+function authenticate(req, res, next, callback) {
+  User.findById(req.session.userId, (error, user) => {
+    if (error) {
+      return next(error);
+    }
+    if (user) {
+      return callback(user);
+    }
+    return res.redirect('/');
   });
 }
 
