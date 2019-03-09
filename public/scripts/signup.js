@@ -15,7 +15,8 @@ $(document).on('submit', '#signup-form form', (event) => {
     },
     error: (data) => {
       let message = data.responseText;
-      message = message.slice(4, message.indexOf('-->'));
+      message = message.slice(message.indexOf('--START-MESSAGE') + '--START-MESSAGE'.length);
+      message = message.slice(0, message.indexOf('END-MESSAGE--'));
       $('#signup-form .error-message').text(message);
     },
   });
