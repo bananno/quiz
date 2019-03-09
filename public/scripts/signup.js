@@ -11,13 +11,11 @@ $(document).on('submit', '#signup-form form', (event) => {
       password: password,
     },
     success: (data) => {
-      console.log('one')
-      console.log(data)
+      window.location.href = '/';
     },
     error: (data) => {
       let message = data.responseText;
-      message = message.slice(4);
-      message = message.slice(0, message.indexOf('-->'));
+      message = message.slice(4, message.indexOf('-->'));
       $('#signup-form .error-message').text(message);
     },
   });
