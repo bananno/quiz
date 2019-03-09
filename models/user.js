@@ -16,7 +16,7 @@ const UserSchema = new Schema({
 
 UserSchema.pre('save', function(next) {
   const user = this;
-  UserSchema.hashPassword(user, next);
+  User.hashPassword(user, next);
 });
 
 UserSchema.statics.hashPassword = (user, next) => {
