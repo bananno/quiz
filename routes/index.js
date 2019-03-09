@@ -15,7 +15,10 @@ function getHomePage(req, res, next) {
 }
 
 function getLoginPage(req, res, next) {
-  res.redirect('login');
+  res.render('layout', {
+    view: 'login',
+    title: 'Login',
+  });
 }
 
 function getProfilePage(req, res, next) {
