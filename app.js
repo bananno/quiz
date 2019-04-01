@@ -11,6 +11,7 @@ const routeFiles = [
   'login',
   'profile',
   'cards',
+  'quiz',
 ];
 
 mongoose.connect('mongodb://localhost/quiz', { useNewUrlParser: true });
