@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Card = require('../models/card');
 const getUser = require('./getUser');
+const getCards = require('./getCards');
 
 router.get('/newCard', (req, res, next) => {
   getUser(req, res, next, user => {
@@ -32,6 +33,18 @@ router.post('/newCard', (req, res, next) => {
       }
 
       return res.redirect('/profile');
+    });
+  });
+});
+
+router.get('/browse', (req, res, next) => {
+  getUser(req, res, next, user => {
+    getCards(req, res, next, {}, cards => {
+      res.render('layout', {
+        view: 'browse',
+        title: 'Browse',
+        cards: cards,
+      });
     });
   });
 });

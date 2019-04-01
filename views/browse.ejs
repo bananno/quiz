@@ -1,0 +1,18 @@
+<h1>Browse</h1>
+
+<table border="1">
+    <tr>
+        <th>question</th>
+        <th>answer</th>
+    </tr>
+    <% cards.forEach(card => { %>
+        <tr>
+            <td>
+                <%= card.question %>
+            </td>
+            <td>
+                <%= card.answer %>
+            </td>
+        </tr>
+    <% }); %>
+</table>
