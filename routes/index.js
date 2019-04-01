@@ -81,12 +81,11 @@ function authenticate(req, res, next, callback) {
       res.locals.user = user;
       return callback(user);
     }
-    return res.redirect('/');
+    return res.redirect('/login');
   });
 }
 
 function logoutUser(req, res, next, callback) {
-  console.log('LOGOUT')
   if (req.session) {
     res.session = null;
     res.redirect('/login');
