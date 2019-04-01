@@ -5,6 +5,7 @@
         <th>question</th>
         <th>answer</th>
         <th>created by</th>
+        <th></th>
     </tr>
     <% cards.forEach(card => { %>
         <tr>
@@ -17,6 +18,29 @@
             <td>
                 <%= card.owner ? card.owner.username : '' %>
             </td>
+            <td class="add-to-list">
+                <span>add to list</span>
+                <select style="display: none;">
+                    <option>select</option>
+                    <option>select</option>
+                    <option>select</option>
+                </select>
+                <button style="display: none;">submit</button>
+            </td>
         </tr>
     <% }); %>
 </table>
+
+<script>
+    $('.add-to-list').each((i, element) => {
+        const $link = $(element).find('span');
+        const $dropdown = $(element).find('select');
+        const $button = $(element).find('button');
+
+        $link.click(() => {
+            $link.hide();
+            $dropdown.show();
+            $button.show();
+        });
+    });
+</script>
