@@ -1,5 +1,5 @@
 const Card = require('../models/card');
-const defaultCards = require('../defaultDatabase/main');
+const defaultCards = require('../defaultDatabase/index');
 
 function getCards(req, res, next, selector, callback) {
   Card.find(selector).populate('owner').exec((error, databaseCards) => {
