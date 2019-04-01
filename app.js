@@ -8,6 +8,8 @@ const MongoStore = require('connect-mongo')(session);
 
 const routeFiles = [
   'index',
+  'login',
+  'profile',
   'cards',
 ];
 
