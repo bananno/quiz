@@ -75,7 +75,7 @@ router.post('/signup', (req, res, next) => {
 
 router.get('/logout', (req, res, next) => {
   if (req.session) {
-    res.session.userId = null;
+    req.session.userId = null;
   }
   res.redirect('/login');
 });
