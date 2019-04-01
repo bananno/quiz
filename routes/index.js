@@ -4,6 +4,7 @@ const User = require('../models/user');
 
 router.get('/', getHomePage);
 router.get('/login', getLoginPage);
+router.get('/logout', logoutUser);
 router.get('/profile', getProfilePage);
 router.post('/login', loginUser);
 router.post('/signup', signupUser);
@@ -77,10 +78,19 @@ function authenticate(req, res, next, callback) {
       return next(error);
     }
     if (user) {
+      res.locals.user = user;
       return callback(user);
     }
     return res.redirect('/');
   });
+}
+
+function logoutUser(req, res, next, callback) {
+  console.log('LOGOUT')
+  if (req.session) {
+    res.session = null;
+    res.redirect('/login');
+  }
 }
 
 module.exports = router;
