@@ -3,12 +3,16 @@ const router = express.Router();
 const Card = require('../models/card');
 const getUser = require('./getUser');
 const getCards = require('./getCards');
+const getCardLists = require('./getCardLists');
 
 router.get('/newCard', (req, res, next) => {
   getUser(req, res, next, user => {
-    res.render('layout', {
-      view: 'newCard',
-      title: 'New Card',
+    getCardLists(req, res, next, user, cardLists => {
+      res.render('layout', {
+        view: 'newCard',
+        title: 'New Card',
+        cardLists: cardLists,
+      });
     });
   });
 });
