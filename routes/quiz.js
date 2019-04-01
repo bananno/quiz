@@ -10,9 +10,14 @@ router.get('/quiz', (req, res, next) => {
         view: 'quiz',
         cards: cards,
         card: cards[0],
+        index: 0,
       });
     });
   });
+});
+
+router.get('/next', (req, res, next) => {
+  res.redirect('/quiz');
 });
 
 module.exports = router;
