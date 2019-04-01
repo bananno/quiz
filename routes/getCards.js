@@ -2,7 +2,7 @@ const Card = require('../models/card');
 const defaultCards = require('../defaultDatabase/main');
 
 function getCards(req, res, next, selector, callback) {
-  Card.find(selector, (error, databaseCards) => {
+  Card.find(selector).populate('owner').exec((error, databaseCards) => {
     if (error) {
       return next(error);
     }

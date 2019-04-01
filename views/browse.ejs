@@ -4,6 +4,7 @@
     <tr>
         <th>question</th>
         <th>answer</th>
+        <th>created by</th>
     </tr>
     <% cards.forEach(card => { %>
         <tr>
@@ -12,6 +13,9 @@
             </td>
             <td>
                 <%= card.answer %>
+            </td>
+            <td>
+                <%= card.owner ? card.owner.username : '' %>
             </td>
         </tr>
     <% }); %>
