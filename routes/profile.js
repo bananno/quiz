@@ -1,15 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const getUser = require('./getUser');
-const Card = require('../models/card');
+const getCards = require('./getCards');
 
 router.get('/profile', (req, res, next) => {
   getUser(req, res, next, user => {
-    Card.find({ owner: user }, (error, cards) => {
-      if (error) {
-        return next(error);
-      }
-
+    getCards(req, res, next, { owner: user }, cards => {
       res.render('layout', {
         view: 'profile',
         title: 'Profile',
