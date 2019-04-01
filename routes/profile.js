@@ -10,6 +10,7 @@ router.get('/profile', (req, res, next) => {
         view: 'profile',
         title: 'Profile',
         cards: cards,
+        cardLists: [{ title: 'My Card List' }],
       });
     });
   });
