@@ -7,14 +7,14 @@
         <h2>Answer</h2>
         <textarea name="answer"></textarea>
         <h2>List</h2>
-        <select name="list">
-            <option>None</option>
+        <select name="cardList">
+            <option value="">None</option>
             <% cardLists.forEach(cardList => { %>
                 <option value="<%= cardList %>"><%= cardList %></option>
             <% }); %>
-            <option value="createnewlist">New List</option>
+            <option value="createNewCardList">New List</option>
         </select>
-        <input type="text" name="list-new" placeholder="New List" style="display: none;">
+        <input type="text" name="newCardList" placeholder="New List" style="display: none;">
         <br>
         <button type="submit">submit</button>
     </form>
@@ -22,11 +22,11 @@
 </div>
 
 <script>
-    $('select[name="list"]').change(() => {
-        const isNew = $('select[name="list"]').val() == 'createnewlist';
-        $('input[name="list-new"]').toggle(isNew);
+    $('select[name="cardList"]').change(() => {
+        const isNew = $('select[name="cardList"]').val() == 'createNewCardList';
+        $('input[name="newCardList"]').toggle(isNew);
         if (isNew) {
-            $('input[name="list-new"]').focus();
+            $('input[name="newCardList"]').focus();
         }
     });
 </script>

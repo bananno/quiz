@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const Card = require('../models/card');
+const CardStatus = require('../models/cardStatus');
 const getUser = require('./getUser');
 const getCards = require('./getCards');
 const getCardLists = require('./getCardLists');
@@ -19,24 +20,48 @@ router.get('/newCard', (req, res, next) => {
 
 router.post('/newCard', (req, res, next) => {
   getUser(req, res, next, user => {
-    const cardData = {
-      question: req.body.question,
-      answer: req.body.answer,
-      owner: user,
-    };
+    const question = req.body.question;
+    const answer = req.body.answer;
 
-    if (!cardData.question || !cardData.answer) {
-      const error = new Error('All fields are required.');
+    if (!question || !answer) {
+      const error = new Error('Question and answer fields are required.');
       error.status = 412;
       return next(error);
     }
+
+    let cardList = req.body.cardList;
+    if (cardList == 'createNewCardList') {
+      cardList = req.body.newCardList.trim();
+    }
+
+    const cardData = {
+      question: question,
+      answer: answer,
+      owner: user,
+    };
 
     Card.create(cardData, (error, card) => {
       if (error) {
         return next(error);
       }
 
-      return res.redirect('/profile');
+      if (cardList == '') {
+        return res.redirect('/profile');
+      }
+
+      const cardListData = {
+        user: user,
+        card: card,
+        list: cardList,
+      };
+
+      CardStatus.create(cardListData, error => {
+        if (error) {
+          return next(error);
+        }
+
+        return res.redirect('/profile');
+      });
     });
   });
 });
