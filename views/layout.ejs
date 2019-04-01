@@ -10,8 +10,9 @@
 </head>
 <body>
     <% if (locals.user) { %>
-        <a href="/logout">logout</a>
+        <a href="/profile">profile</a>
         <a href="/newCard">new card</a>
+        <a href="/logout">logout</a>
     <% } %>
 
     <%- include('./' + view) %>
