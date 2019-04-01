@@ -5,8 +5,12 @@ const getUser = require('./getUser');
 
 router.get('/quiz', (req, res, next) => {
   getUser(req, res, next, user => {
-    res.render('layout', {
-      view: 'quiz',
+    Card.find({ owner: user }, (error, cards) => {
+      res.render('layout', {
+        view: 'quiz',
+        cards: cards,
+        card: cards[0],
+      });
     });
   });
 });
