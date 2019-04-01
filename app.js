@@ -8,6 +8,7 @@ const MongoStore = require('connect-mongo')(session);
 
 const routeFiles = [
   'index',
+  'cards',
 ];
 
 mongoose.connect('mongodb://localhost/quiz', { useNewUrlParser: true });
