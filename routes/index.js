@@ -32,7 +32,30 @@ function getProfilePage(req, res, next) {
 }
 
 function loginUser(req, res, next) {
-  res.redirect('/');
+  const username = req.body.username;
+  const password = req.body.password;
+
+  if (!username || !password) {
+    const error = new Error('All fields are required.');
+    error.status = 412;
+    return next(error);
+  }
+
+  User.authenticate(username, password, (error, user) => {
+    if (error) {
+      return next(error);
+    }
+
+    if (!user) {
+      error = new Error('Username or password is incorrect.');
+      error.status = 412;
+      return next(error);
+    }
+
+    req.session.userId = user._id;
+
+    return res.redirect('/');
+  });
 }
 
 function signupUser(req, res, next) {
