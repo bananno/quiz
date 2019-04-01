@@ -4,14 +4,24 @@
     <%= index + 1 %> of <%= cards.length %>
 </p>
 
-<div style="border: 1px solid black">
-    <%= card.question %>
-</div>
-
-<div style="border: 1px solid black">
-    <%= card.answer %>
-</div>
-
 <p>
     <a href="/quiz/<%= index + 1%>">next</a>
 </p>
+
+<div style="border: 1px solid black; padding: 10px;">
+    <%= card.question %>
+</div>
+
+<div class="answer" style="border: 1px solid black; padding: 10px; margin-top: 20px;">
+    <div style="display: none">
+        <%= card.answer %>
+    </div>
+    <button>show answer</button>
+</div>
+
+<script>
+    $('.answer button').click(() => {
+        $('.answer button').hide();
+        $('.answer div').show();
+    });
+</script>
