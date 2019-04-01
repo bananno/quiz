@@ -108,11 +108,11 @@ function authenticate(req, res, next, callback) {
   });
 }
 
-function logoutUser(req, res, next, callback) {
+function logoutUser(req, res, next) {
   if (req.session) {
     res.session = null;
-    res.redirect('/login');
   }
+  res.redirect('/login');
 }
 
 module.exports = router;
